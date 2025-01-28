@@ -1,10 +1,10 @@
 #include <stdlib.h>
 
-char	*ft_strncpy(char *s1, char *s2, int n)
+char *ft_strncpy(char *s1, char *s2, int n)
 {
 	int i = 0;
 
-	while (i < n && s2[i])
+	while (s2[i] && i < n)
 	{
 		s1[i] = s2[i];
 		i++;
@@ -16,40 +16,38 @@ char	*ft_strncpy(char *s1, char *s2, int n)
 char	**ft_split(char *str)
 {
 	int i = 0;
-	int j = 0;
-	int k = 0;
+	int ws = 0;
 	int wc = 0;
+	int tw = 0;
 
 	while (str[i])
 	{
 		while (str[i] && (str[i] == ' ' || str[i] == '\t' || str[i] == '\n'))
 			i++;
 		if (str[i])
-			wc++;
+			tw++;
 		while (str[i] && (str[i] != ' ' && str[i] != '\t' && str[i] != '\n'))
 			i++;
 	}
-
-	char **out = (char **)malloc(sizeof(char *) * (wc + 1));
-	if (!out)
+	char **word_array = (char **)malloc(sizeof(char *) * (tw + 1));
+	if (!word_array)
 		return (NULL);
 	i = 0;
-
 	while (str[i])
 	{
 		while (str[i] && (str[i] == ' ' || str[i] == '\t' || str[i] == '\n'))
 			i++;
-		j = i;
+		ws = i;
 		while (str[i] && (str[i] != ' ' && str[i] != '\t' && str[i] != '\n'))
 			i++;
-		if (i > j)
+		if (i > ws)
 		{
-			out[k] = (char *)malloc(sizeof(char) * ((i - j) + 1));
-			if (!out)
+			word_array[wc] = (char *)malloc(sizeof(char) * ((i - ws) + 1));
+			if (!word_array)
 				return (NULL);
-			ft_strncpy(out[k++], &str[j], i - j);
+			ft_strncpy(word_array[wc++], &str[ws], i - ws);
 		}
 	}
-	out[k] = NULL;
-	return (out);
+	word_array[wc] = NULL;
+	return (word_array);
 }
