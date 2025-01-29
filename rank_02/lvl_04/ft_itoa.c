@@ -1,3 +1,4 @@
+
 #include <stdlib.h>
 
 int	ft_abs(int nb)
@@ -9,25 +10,26 @@ int	ft_abs(int nb)
 
 int	nlen(int nb)
 {
-	int count = 0;
+	int len = 0;
 
 	if (nb == 0)
 		return (1);
-	while (nb >= 10)
+	if (nb < 0)
+		nb = -nb;
+	while (nb > 0)
 	{
 		nb /= 10;
-		count++;
+		len++;
 	}
-	return (count);
+	return (len);
 }
 
 char	*ft_itoa(int nbr)
 {
-	int len;
 	char *new_nb;
+	int len = nlen(nbr);
 	int is_negative = (nbr < 0);
 
-	len = nlen(nbr);
 	if (is_negative)
 		len++;
 	new_nb = malloc(sizeof(char) * (len + 1));
@@ -36,11 +38,10 @@ char	*ft_itoa(int nbr)
 	if (is_negative)
 		new_nb[0] = '-';
 	new_nb[len] = '\0';
-	while (len >= is_negative)
+	while (len > is_negative)
 	{
-		new_nb[len] = ft_abs(nbr % 10) + '0';
+		new_nb[--len] = ft_abs(nbr % 10) + '0';
 		nbr /= 10;
-		len--;
 	}
 	return (new_nb);
 }
