@@ -2,7 +2,7 @@
 
 int	main(int argc, char **argv)
 {
-	if (argc != 4 || argv[2][1] || argv[3][1b])
+	if (argc != 4 || argv[2][1] || argv[3][1])
 	{
 		write(1, "\n", 1);
 		return (1);
