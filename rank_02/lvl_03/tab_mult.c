@@ -1,56 +1,56 @@
 #include <unistd.h>
 
-int ft_atoi(const char *str)
+int	ft_atoi(char *str)
 {
-	int result = 0;
 	int sign = 1;
+	int res = 0;
 
 	while (*str == ' ' || (*str >= 9 && *str <= 13))
 		str++;
-	if (*str == '-')
-		sign = -1;
 	if (*str == '-' || *str == '+')
-		str++;
-	while (*str >= '0' && *str <= '9')
 	{
-		result = result * 10 + (*str - '0');
+		if (*str == '-')
+			sign = -1;
 		str++;
 	}
-	return (sign * result);
+	while (*str >= '0' && *str <= '9')
+	{
+		res = res * 10 + *str - '0';
+		str++;
+	}
+	return (sign * res);
 }
 
-void ft_putchar(char c)
+void	put_char(char c)
 {
-	write( 1, &c, 1);
+	write(1, &c, 1);
 }
 
-void ft_putnbr(int nb)
+void	put_nbr(int nb)
 {
 	if (nb / 10 > 0)
-		ft_putnbr(nb / 10);
-	ft_putchar(nb % 10 + '0');
+		put_nbr(nb / 10);
+	put_char(nb % 10 + '0');
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	int i = 1;
-	int nbr;
-
 	if (argc != 2)
 	{
 		write(1, "\n", 1);
 		return (1);
 	}
-	nbr = ft_atoi(argv[1]);
-	while (i <= 9 && nbr <= 238609294)
+	int i = 1;
+	int nb = ft_atoi(argv[1]);
+	while (i <= 9 && nb <= 238609294)
 	{
-		ft_putnbr(i);
+		put_nbr(i);
 		write(1, " x ", 3);
-		ft_putnbr(nbr);
+		put_nbr(nb);
 		write(1, " = ", 3);
-		ft_putnbr(i * nbr);
+		put_nbr(i * nb);
 		write(1, "\n", 1);
-		i += 1;
+		i++;
 	}
 	return (0);
 }
