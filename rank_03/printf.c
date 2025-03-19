@@ -23,12 +23,12 @@ static void ft_putnbr(long nb, int *res)
 		ft_putnbr(nb / 10, res);
 	*res += write(1, &base[nb % 10], 1);
 }
-static void ft_print_hex(unsigned int num, int *res)
+static void ft_print_hex(unsigned int nb, int *res)
 {
 	char hex[16] = "0123456789abcdef";
-	if (num > 15)
-		ft_print_hex(num / 16, res);
-	*res += write(1, &hex[num % 16], 1);
+	if (nb > 15)
+		ft_print_hex(nb / 16, res);
+	*res += write(1, &hex[nb % 16], 1);
 }
 int ft_printf(const char *format, ...)
 {
@@ -58,10 +58,30 @@ int ft_printf(const char *format, ...)
 	return(res);
 }
 
-int	main()
+int main()
 {
-	int x = ft_printf("MY: %s ist %d lang bei %x\n", "Hallo", 5, 0x1234);
-	int y = printf("OG: %s ist %d lang bei %x\n", "Hallo", 5, 0x1234);
-	printf("X: %d\nY: %d\n", x, y);
+	ft_printf("MY: Basic string test\n");
+	printf("OG: Basic string test\n");
+	// String formats
+	ft_printf("MY: String: '%s', NULL: '%s'\n", "hello", NULL);
+	printf("OG: String: '%s', NULL: '%s'\n", "hello", NULL);
+	// Integer formats
+	ft_printf("MY: Integers: %d, %d, %d, %d\n", 0, -42, 2147483647, -2147483648);
+	printf("OG: Integers: %d, %d, %d, %ld\n", 0, -42, 2147483647, -2147483648);
+	// Hexadecimal formats
+	ft_printf("MY: Hex: %x, %x, %x, %x\n", 0, 42, 0xDEAD, 0xFFFFFFFF);
+	printf("OG: Hex: %x, %x, %x, %x\n", 0, 42, 0xDEAD, 0xFFFFFFFF);
+	// Mixed formats
+	ft_printf("MY: Mixed: %s %d %x\n", "test", 42, 0xABC);
+	printf("OG: Mixed: %s %d %x\n", "test", 42, 0xABC);
+	// Edge cases
+	ft_printf("MY: Edge: %%\n");
+	printf("OG: Edge: %%\n");
+	// Multiple identical formats
+	ft_printf("MY: Multiple: %d %d %d\n", 1, 2, 3);
+	printf("OG: Multiple: %d %d %d\n", 1, 2, 3);
+	// Empty string
+	ft_printf("MY: Empty string: '%s'\n", "");
+	printf("OG: Empty string: '%s'\n", "");
 	return (0);
 }
